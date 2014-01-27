@@ -60,9 +60,6 @@ END:VEVENT
 END:VCALENDAR"""
     else ''
 
-#UID:#{uuid.v4()}
-
-
   $scope.moment = 'today'
 
   $scope.detected = null
@@ -71,9 +68,12 @@ END:VCALENDAR"""
     date = extractOffset($scope.moment) || extractDate($scope.moment)
     $scope.detected =
       if date? and date.isValid
+        ics = toIcs(date)
+        link = 'data:text/calendar;charset=utf8,' + encodeURI(ics)
         {
           'date': date,
-          'ics': toIcs(date)
+          'ics': toIcs(date),
+          'link': link
         }
       else null
 

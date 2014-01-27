@@ -16,3 +16,6 @@ block main
     .row(ng-show="detected")
       .large-6.large-offset-3
         pre {{detected.ics}}
+    .row(ng-show="detected")
+      .large-6.large-offset-3
+        a(href="{{detected.link}}") Download
