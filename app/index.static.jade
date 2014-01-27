@@ -1,0 +1,15 @@
+extends layout.static.jade
+
+block title
+  |When
+
+block main
+  .main(ng-app="when" ng-controller="MainCtrl")
+    .row
+      h1 When
+    .row
+      .large-6.large-offset-3
+        input(type="text" ng-model="moment")
+    .row
+      .large-6.large-offset-3
+        {{date()}}
