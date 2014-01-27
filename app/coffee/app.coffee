@@ -20,7 +20,7 @@ app.controller 'MainCtrl', ($scope) ->
   extractOffset = (moment) ->
     offset = /^(([a-z]+)|([0-9]+)) (week|day|year)(s)? (before|after) (.*)$/.exec moment
     if offset?
-      [match, textOrNumber, text, number, period, m, relative, timestamp] = offset
+      [__, __, text, number, period, __, relative, timestamp] = offset
       console.info offset
       date = Date.create timestamp
       factor = if relative == 'before' then -1 else 1
