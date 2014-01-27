@@ -5,7 +5,8 @@
   "dependencies": {
     "foundation": "~5.0.3",
     "sugar": "~1.4.1",
-    "angular": "~1.2.10"
+    "angular": "~1.2.10",
+    "angular-uuid4": "~0.0.3"
   },
   "overrides": {
     "modernizr": {

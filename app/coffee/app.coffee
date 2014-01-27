@@ -1,4 +1,8 @@
-app = angular.module 'when', []
+app = angular.module 'when', ['uuid4']
+
+app.config ['$compileProvider', ($compileProvider) ->
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
+]
 
 namedNumbers = {
   'one': 1,
@@ -15,7 +19,7 @@ namedNumbers = {
   'thirty': 30
 }
 
-app.controller 'MainCtrl', ($scope) ->
+app.controller 'MainCtrl', ($scope, uuid4) ->
 
   extractOffset = (moment) ->
     offset = /^(([a-z]+)|([0-9]+)) (week|day|year)(s)? (before|after) (.*)$/.exec moment
@@ -35,11 +39,71 @@ app.controller 'MainCtrl', ($scope) ->
   extractDate = (moment) ->
     Date.create moment
 
-  $scope.moment = 'today'
-  $scope.date = () ->
-    result = extractOffset($scope.moment) || extractDate($scope.moment)
-    if result? and result.isValid()
-      result.long()
-    else
-      'undefined'
+  toIcs = (date) ->
+    if date?
+      start = date
+      end = date.addHours 1
+      desc = 'Get something done'
+      format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
+      """BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//flotsam/when//NONSGML v1.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:#{Date.create('now').format format}
+DTSTART:#{end.format format}
+DTEND:#{start.format format}
+DESCRIPTION:#{desc}
+UID:#{uuid4.generate()}
+SUMMARY:#{desc}
+END:VEVENT
+END:VCALENDAR"""
+    else ''
 
+#UID:#{uuid.v4()}
+
+
+  $scope.moment = 'today'
+
+  $scope.detected = null
+
+  $scope.$watch 'moment', (newValue) ->
+    date = extractOffset($scope.moment) || extractDate($scope.moment)
+    $scope.detected =
+      if date? and date.isValid
+        {
+          'date': date,
+          'ics': toIcs(date)
+        }
+      else null
+
+
+#  $scope.ics = () ->
+#    if $scope.date()?
+#      start = $scope.date()
+#      end = start.addHours 1
+#      desc = 'Get something done'
+#      format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
+#      """BEGIN:VCALENDAR
+#VERSION:2.0
+#PRODID:-//flotsam/when//NONSGML v1.0//EN
+#CALSCALE:GREGORIAN
+#BEGIN:VEVENT
+#DTEND:#{start.format format}
+#UID:#{uuid.v4()}
+#DTSTAMP:#{Date.create('now').format format}
+#DESCRIPTION:#{desc}
+#SUMMARY:#{desc}
+#DTSTART:#{end.format format}
+#END:VEVENT
+#END:VCALENDAR"""
+#    else ''
+#
+#  $scope.link = () ->
+#    ics = $scope.ics()
+#    if ics
+#      'data:text/calendar;charset=utf8,' + encodeURI(ics)
+#    else
+#      null
+
+  return
