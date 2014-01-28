@@ -22,7 +22,7 @@ namedNumbers = {
 app.controller 'MainCtrl', ($scope, uuid4) ->
 
   extractOffset = (moment) ->
-    offset = /^(([a-z]+)|([0-9]+)) (week|day|year)(s)? (before|after) (.*)$/.exec moment
+    offset = /^(([a-z]+)|([0-9]+))\s(week|day|year)(s)?\s(before|after)\s(.*)$/.exec moment
     if offset?
       [__, __, text, number, period, __, relative, timestamp] = offset
       date = Date.create timestamp
