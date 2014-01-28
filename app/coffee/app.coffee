@@ -37,10 +37,9 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
   extractDate = (moment) ->
     Date.create(moment)
 
-  toIcs = (date) ->
+  toIcs = (date, desc) ->
     if date?
       end = Date.create(date).addHours(1)
-      desc = 'Get something done'
       format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
       """BEGIN:VCALENDAR
 VERSION:2.0
@@ -61,16 +60,23 @@ END:VCALENDAR"""
 
   $scope.detected = null
 
-  $scope.$watch 'moment', (newValue) ->
-    date = extractOffset(newValue) || extractDate(newValue)
+  $scope.$watch 'moment', (moment) ->
+    descriptive = /^([^,]+),\s(.*)$/.exec moment
+    [desc, moment] =
+      if descriptive?
+        descriptive.splice(1)
+      else
+        ['Get something done', moment]
+    date = extractOffset(moment) || extractDate(moment)
     $scope.detected =
       if date? and date.isValid
         ics = toIcs(date)
         link = 'data:text/calendar;charset=utf8,' + encodeURI(ics)
         {
           'date': date,
-          'ics': toIcs(date),
-          'link': link
+          'ics': toIcs(date, desc),
+          'link': link,
+          'desc': desc
         }
       else null
 
