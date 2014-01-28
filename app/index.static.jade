@@ -21,4 +21,4 @@ block main
         pre {{detected.ics}}
     .row(ng-show="detected")
       .large-6.large-offset-3
-        a(href="{{detected.link}}") Download
+        a(href="{{detected.link}}" download="{{detected.filename}}") Download

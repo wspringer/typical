@@ -68,16 +68,19 @@ END:VCALENDAR"""
       else
         ['Get something done', moment]
     date = extractOffset(moment) || extractDate(moment)
+    filename = desc.replace(/\s/g, '-').toLowerCase() + '.ics'
     $scope.detected =
       if date? and date.isValid
-        ics = toIcs(date)
-        link = 'data:text/calendar;charset=utf8,' + encodeURI(ics)
-        {
+        ics = toIcs(date, desc)
+        link = 'data:text/calendar;charset=utf8,' + encodeURIComponent(ics)
+        result = {
           'date': date,
-          'ics': toIcs(date, desc),
+          'ics': ics,
           'link': link,
-          'desc': desc
+          'desc': desc,
+          'filename': filename
         }
+        result
       else null
 
   return
