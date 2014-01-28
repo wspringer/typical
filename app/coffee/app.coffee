@@ -25,11 +25,9 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
     offset = /^(([a-z]+)|([0-9]+)) (week|day|year)(s)? (before|after) (.*)$/.exec moment
     if offset?
       [__, __, text, number, period, __, relative, timestamp] = offset
-      console.info offset
       date = Date.create timestamp
       factor = if relative == 'before' then -1 else 1
       units = factor * (if text? then namedNumbers[text] else parseInt(number) || 0)
-      console.info units
       switch period
         when 'year' then date.addYears units
         when 'week' then date.addWeeks units
@@ -37,12 +35,11 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
     else null
 
   extractDate = (moment) ->
-    Date.create moment
+    Date.create(moment)
 
   toIcs = (date) ->
     if date?
-      start = date
-      end = date.addHours 1
+      end = Date.create(date).addHours(1)
       desc = 'Get something done'
       format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
       """BEGIN:VCALENDAR
@@ -51,8 +48,8 @@ PRODID:-//flotsam/when//NONSGML v1.0//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
 DTSTAMP:#{Date.create('now').format format}
-DTSTART:#{end.format format}
-DTEND:#{start.format format}
+DTSTART:#{date.format format}
+DTEND:#{end.format format}
 DESCRIPTION:#{desc}
 UID:#{uuid4.generate()}
 SUMMARY:#{desc}
