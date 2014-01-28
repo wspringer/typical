@@ -62,7 +62,7 @@ END:VCALENDAR"""
   $scope.detected = null
 
   $scope.$watch 'moment', (newValue) ->
-    date = extractOffset($scope.moment) || extractDate($scope.moment)
+    date = extractOffset(newValue) || extractDate(newValue)
     $scope.detected =
       if date? and date.isValid
         ics = toIcs(date)
@@ -73,34 +73,5 @@ END:VCALENDAR"""
           'link': link
         }
       else null
-
-
-#  $scope.ics = () ->
-#    if $scope.date()?
-#      start = $scope.date()
-#      end = start.addHours 1
-#      desc = 'Get something done'
-#      format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
-#      """BEGIN:VCALENDAR
-#VERSION:2.0
-#PRODID:-//flotsam/when//NONSGML v1.0//EN
-#CALSCALE:GREGORIAN
-#BEGIN:VEVENT
-#DTEND:#{start.format format}
-#UID:#{uuid.v4()}
-#DTSTAMP:#{Date.create('now').format format}
-#DESCRIPTION:#{desc}
-#SUMMARY:#{desc}
-#DTSTART:#{end.format format}
-#END:VEVENT
-#END:VCALENDAR"""
-#    else ''
-#
-#  $scope.link = () ->
-#    ics = $scope.ics()
-#    if ics
-#      'data:text/calendar;charset=utf8,' + encodeURI(ics)
-#    else
-#      null
 
   return
