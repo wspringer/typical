@@ -9,7 +9,9 @@ exports.config =
           /^bower_components/.test(path) and /modernizr/.test(path)
         'js/app.js': /^app/
     stylesheets:
-      joinTo: 'css/app.css'
+      joinTo:
+        'css/app.css': (path) ->
+          not /foundation/.test(path)
     templates:
       joinTo: 'js/app.js'
   plugins:
