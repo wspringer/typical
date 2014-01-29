@@ -1,0 +1,35 @@
+.top {
+  background-color: white;
+  h1 {
+    color: #555;
+  }
+}
+
+.contents {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+input.huge {
+  font-size: 24px;
+  height: 48px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 3px;
+}
+
+body {
+  background-color: #e66665;
+}
+
+.contents {
+  a {
+    color: #f2c5cb;
+  }
+  p {
+    color: #823434;
+  }
+  p.property {
+    color: #b35050;
+  }
+}

@@ -1,4 +1,4 @@
-app = angular.module 'when', ['uuid4']
+app = angular.module 'when', ['uuid4', 'ngAnimate']
 
 app.config ['$compileProvider', ($compileProvider) ->
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
@@ -70,7 +70,7 @@ END:VCALENDAR"""
     date = extractOffset(moment) || extractDate(moment)
     filename = desc.replace(/\s/g, '-').toLowerCase() + '.ics'
     $scope.detected =
-      if date? and date.isValid
+      if date? and date.isValid()
         ics = toIcs(date, desc)
         link = 'data:text/calendar;charset=utf8,' + encodeURIComponent(ics)
         result = {

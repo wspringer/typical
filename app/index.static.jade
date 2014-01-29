@@ -5,20 +5,30 @@ block title
 
 block main
   .main(ng-app="when" ng-controller="MainCtrl")
-    .row
-      h1 When
-    .row
-      .large-6.large-offset-3
-        input(type="text" ng-model="moment")
-    .row(ng-show="detected")
-      .large-6.large-offset-3
-        p {{detected.desc}}
-    .row(ng-show="detected")
-      .large-6.large-offset-3
-        |{{detected.date.long()}}
-    .row(ng-show="detected")
-      .large-6.large-offset-3
-        pre {{detected.ics}}
-    .row(ng-show="detected")
-      .large-6.large-offset-3
-        a(href="{{detected.link}}" download="{{detected.filename}}") Download
+    .top
+      .row
+        .small-12.columns
+          img(width="211" height="57" src="img/logo@2x.png")
+    .contents
+      .row
+        .small-12.large-offset-2.large-8.columns
+          input.huge(type="text" ng-model="moment")
+      .detected(ng-show="detected != null"
+        ng-class="{ 'animated fadeIn' : detected != null, 'fadeOut': detected == null }")
+        .row
+          .small-2.large-offset-2.large-1.columns
+            p.property What
+          .small-10.large-7.columns
+            p {{detected.desc}}
+          .small-0.large-2
+        .row
+          .small-2.large-offset-2.large-1.columns
+            p.property When
+          .small-10.large-7.columns
+            p {{detected.date.long()}}
+          .small-0.large-2
+        .row
+          .small-12.large-offset-2.large-8.columns
+            p
+              a(href="{{detected.link}}" download="{{detected.filename}}") Download
+          .small-0.large-2
