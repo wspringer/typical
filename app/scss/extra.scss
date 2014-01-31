@@ -1,3 +1,5 @@
+$app-color: #e66665;
+
 .top {
   padding-top: 50px;
   h1 {
@@ -19,12 +21,14 @@ input.huge {
 }
 
 body {
-  background-color: #e66665;
+  background-color: $app-color;
 }
 
 .contents {
   a {
-    color: #f2c5cb;
+    color: lighten($app-color, 15%);
+    :hover { color: lighten($app-color, 20%); }
+    :active { color: lighten($app-color, 17%); }
   }
   p {
     color: #823434;
@@ -32,4 +36,8 @@ body {
   p.property {
     color: #b35050;
   }
+}
+
+.download {
+  font-size: 70px;
 }

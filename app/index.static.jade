@@ -8,7 +8,7 @@ block main
     .top
       .row
         .small-12.text-center.columns
-          img(width="211" height="57" src="img/logo@2x.png")
+          img(width="206" height="51" src="img/logo@2x.png")
     .contents
       .row
         .small-12.large-offset-2.large-8.columns
@@ -28,7 +28,8 @@ block main
             p {{detected.date.long()}}
           .small-0.large-2
         .row
-          .small-12.large-offset-2.large-8.columns
+          .small-12.large-offset-2.large-8.columns.text-center
             p
-              a(href="{{detected.link}}" download="{{detected.filename}}") Download
+              a(href="{{detected.link}}" download="{{detected.filename}}")
+                i.download.foundicon-down-arrow
           .small-0.large-2
