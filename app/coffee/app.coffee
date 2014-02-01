@@ -41,22 +41,24 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
     if date?
       end = Date.create(date).addHours(1)
       format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
-      """BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//flotsam/when//NONSGML v1.0//EN
-CALSCALE:GREGORIAN
-BEGIN:VEVENT
-DTSTAMP:#{Date.create('now').format format}
-DTSTART:#{date.format format}
-DTEND:#{end.format format}
-DESCRIPTION:#{desc}
-UID:#{uuid4.generate()}
-SUMMARY:#{desc}
-END:VEVENT
-END:VCALENDAR"""
+      [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//flotsam/when//NONSGML v1.0//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        "DTSTAMP:#{Date.create('now').format format}",
+        "DTSTART:#{date.format format}",
+        "DTEND:#{end.format format}",
+        "DESCRIPTION:#{desc}",
+        "UID:#{uuid4.generate()}",
+        "SUMMARY:#{desc}",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n")
     else ''
 
-  $scope.moment = 'today'
+  $scope.moment = 'one hour from now'
 
   $scope.detected = null
 
@@ -67,7 +69,7 @@ END:VCALENDAR"""
         descriptive.splice(1)
       else
         ['Get something done', moment]
-    date = extractOffset(moment) || extractDate(moment)
+    date = extractOffset(moment.toLowerCase()) || extractDate(moment.toLowerCase())
     filename = desc.replace(/\s/g, '-').toLowerCase() + '.ics'
     $scope.detected =
       if date? and date.isValid()

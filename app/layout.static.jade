@@ -6,7 +6,7 @@ doctype
 //if IE 8
   <html class="no-js lt-ie9">
 //[if gt IE 8]><!
-html.no-js
+html.no-js(manifest="/appcache.appcache")
   //<![endif]
   head
     meta(charset='utf-8')
@@ -15,6 +15,9 @@ html.no-js
       block title
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    //
+      Weird, this basically prevents the data link to work
+      meta(name="apple-mobile-web-app-capable", content="yes")
     link(rel="apple-touch-icon", href="/img/icon_60x60@2x.png")
     link(rel="apple-touch-icon", sizes="76x76", href="/img/icon_76x76@2x.png")
     link(rel="apple-touch-icon", sizes="120x120", href="/img/icon_120x120@2x.png")
