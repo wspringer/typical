@@ -58,7 +58,7 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
       ].join("\r\n")
     else ''
 
-  $scope.moment = 'today'
+  $scope.moment = 'one hour from now'
 
   $scope.detected = null
 
