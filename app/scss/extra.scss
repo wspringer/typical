@@ -1,0 +1,45 @@
+$app-color: #e66665;
+
+.top {
+  padding-top: 50px;
+  h1 {
+    color: #555;
+  }
+}
+
+.contents {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+input.huge {
+  font-size: 24px;
+  height: 48px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 3px;
+}
+
+body {
+  background-color: $app-color;
+}
+
+.contents {
+  a {
+    color: lighten($app-color, 15%);
+    :hover { color: lighten($app-color, 20%); }
+    :active { color: lighten($app-color, 17%); }
+  }
+  p {
+    color: #823434;
+  }
+  p.property {
+    color: #b35050;
+  }
+}
+
+.download {
+  font-size: 70px;
+}

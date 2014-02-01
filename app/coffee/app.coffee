@@ -1,4 +1,8 @@
-app = angular.module 'when', []
+app = angular.module 'when', ['uuid4', 'ngAnimate']
+
+app.config ['$compileProvider', ($compileProvider) ->
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
+]
 
 namedNumbers = {
   'one': 1,
@@ -15,17 +19,15 @@ namedNumbers = {
   'thirty': 30
 }
 
-app.controller 'MainCtrl', ($scope) ->
+app.controller 'MainCtrl', ($scope, uuid4) ->
 
   extractOffset = (moment) ->
-    offset = /^(([a-z]+)|([0-9]+)) (week|day|year)(s)? (before|after) (.*)$/.exec moment
+    offset = /^(([a-z]+)|([0-9]+))\s(week|day|year)(s)?\s(before|after)\s(.*)$/.exec moment
     if offset?
-      [match, textOrNumber, text, number, period, m, relative, timestamp] = offset
-      console.info offset
+      [__, __, text, number, period, __, relative, timestamp] = offset
       date = Date.create timestamp
       factor = if relative == 'before' then -1 else 1
       units = factor * (if text? then namedNumbers[text] else parseInt(number) || 0)
-      console.info units
       switch period
         when 'year' then date.addYears units
         when 'week' then date.addWeeks units
@@ -33,13 +35,52 @@ app.controller 'MainCtrl', ($scope) ->
     else null
 
   extractDate = (moment) ->
-    Date.create moment
+    Date.create(moment)
+
+  toIcs = (date, desc) ->
+    if date?
+      end = Date.create(date).addHours(1)
+      format = '{yyyy}{MM}{dd}T{hh}{mm}{ss}'
+      """BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//flotsam/when//NONSGML v1.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:#{Date.create('now').format format}
+DTSTART:#{date.format format}
+DTEND:#{end.format format}
+DESCRIPTION:#{desc}
+UID:#{uuid4.generate()}
+SUMMARY:#{desc}
+END:VEVENT
+END:VCALENDAR"""
+    else ''
 
   $scope.moment = 'today'
-  $scope.date = () ->
-    result = extractOffset($scope.moment) || extractDate($scope.moment)
-    if result? and result.isValid()
-      result.long()
-    else
-      'undefined'
 
+  $scope.detected = null
+
+  $scope.$watch 'moment', (moment) ->
+    descriptive = /^([^,]+),\s(.*)$/.exec moment
+    [desc, moment] =
+      if descriptive?
+        descriptive.splice(1)
+      else
+        ['Get something done', moment]
+    date = extractOffset(moment) || extractDate(moment)
+    filename = desc.replace(/\s/g, '-').toLowerCase() + '.ics'
+    $scope.detected =
+      if date? and date.isValid()
+        ics = toIcs(date, desc)
+        link = 'data:text/calendar;charset=utf8,' + encodeURIComponent(ics)
+        result = {
+          'date': date,
+          'ics': ics,
+          'link': link,
+          'desc': desc,
+          'filename': filename
+        }
+        result
+      else null
+
+  return
