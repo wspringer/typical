@@ -69,7 +69,7 @@ app.controller 'MainCtrl', ($scope, uuid4) ->
         descriptive.splice(1)
       else
         ['Get something done', moment]
-    date = extractOffset(moment) || extractDate(moment)
+    date = extractOffset(moment.toLowerCase()) || extractDate(moment.toLowerCase())
     filename = desc.replace(/\s/g, '-').toLowerCase() + '.ics'
     $scope.detected =
       if date? and date.isValid()
