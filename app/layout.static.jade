@@ -1,12 +1,12 @@
 doctype
 //if lt IE 7
-  <html class="no-js lt-ie9 lt-ie8 lt-ie7">
+  <html class='no-js lt-ie9 lt-ie8 lt-ie7'>
 //if IE 7
-  <html class="no-js lt-ie9 lt-ie8">
+  <html class='no-js lt-ie9 lt-ie8'>
 //if IE 8
-  <html class="no-js lt-ie9">
+  <html class='no-js lt-ie9'>
 //[if gt IE 8]><!
-html.no-js(manifest="/appcache.appcache")
+html.no-js(manifest='/appcache.appcache')
   //<![endif]
   head
     meta(charset='utf-8')
@@ -15,14 +15,18 @@ html.no-js(manifest="/appcache.appcache")
       block title
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='og:title', content='Typical')
+    meta(name='og:url', content='http://typical.io/')
+    meta(name='og:site_name', content='Typical')
+    meta(name='og:image', content='/img/icon_512x512.png')
     //
       Weird, this basically prevents the data link to work
-      meta(name="apple-mobile-web-app-capable", content="yes")
-    link(rel="apple-touch-icon", href="/img/icon_60x60@2x.png")
-    link(rel="apple-touch-icon", sizes="76x76", href="/img/icon_76x76@2x.png")
-    link(rel="apple-touch-icon", sizes="120x120", href="/img/icon_120x120@2x.png")
-    link(rel="apple-touch-icon", sizes="152x152", href="/img/icon_152x152@2x.png")
-    link(rel="icon", type="image/png", href="/typical.ico")
+      meta(name='apple-mobile-web-app-capable', content='yes')
+    link(rel='apple-touch-icon', href='/img/icon_60x60@2x.png')
+    link(rel='apple-touch-icon', sizes='76x76', href='/img/icon_76x76@2x.png')
+    link(rel='apple-touch-icon', sizes='120x120', href='/img/icon_120x120@2x.png')
+    link(rel='apple-touch-icon', sizes='152x152', href='/img/icon_152x152@2x.png')
+    link(rel='icon', type='image/png', href='/typical.ico')
     link(rel='stylesheet', href='css/app.css')
     link(rel='stylesheet', href='foundation_icons_general_enclosed/stylesheets/general_enclosed_foundicons.css')
     script(src='js/modernizr.js')
@@ -30,7 +34,7 @@ html.no-js(manifest="/appcache.appcache")
     //if lt IE 7
       p.browsehappy
         | You are using an <strong>outdated</strong> browser.
-        | Please <a href="http://browsehappy.com/">upgrade your browser</a>
+        | Please <a href='http://browsehappy.com/'>upgrade your browser</a>
         | to improve your experience.
 
     block main
