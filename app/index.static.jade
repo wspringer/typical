@@ -4,7 +4,7 @@ block title
   |Typical
 
 block main
-  .main(ng-app="when" ng-controller="MainCtrl")
+  .main(ng-app="when" ng-controller="MainCtrl" ng-cloak)
     .top
       .row
         .small-12.text-center.columns
@@ -17,15 +17,15 @@ block main
         ng-class="{ 'animated fadeIn' : detected != null, 'fadeOut': detected == null }")
         .row
           .small-2.large-offset-2.large-1.columns
-            p.property What
+            p.key What
           .small-10.large-7.columns
-            p {{detected.desc}}
+            p(ng-bind="detected.desc")
           .small-0.large-2
         .row
           .small-2.large-offset-2.large-1.columns
-            p.property When
+            p.key When
           .small-10.large-7.columns
-            p {{detected.date.long()}}
+            p(ng-bind="detected.date.long()")
           .small-0.large-2
         .row
           .small-12.large-offset-2.large-8.columns.text-center
